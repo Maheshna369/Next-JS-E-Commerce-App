@@ -145,7 +145,7 @@ const Footer = () => {
             )}
           </button>
           <div className="w-full h-[50%] flex justify-center items-center">
-            &copy; 2024 Maphy, Inc. All Rights Reserved.
+            &copy; 2025 Maphy, Inc. All Rights Reserved.
           </div>
         </div>
       </div>
