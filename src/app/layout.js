@@ -14,6 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full w-full">
       <head>
+      <link rel="icon" href="/free.png" type="image/png" />
         <script
           src="https://checkout.razorpay.com/v1/checkout.js"
           async
