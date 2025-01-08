@@ -30,6 +30,8 @@ export const POST = async (request) => {
       { status: 400 }
     );
   }
+  console.log("EMAIL_SERVER_USER:", process.env.EMAIL_SERVER_USER);
+  console.log("EMAIL_SERVER_PASSWORD:", process.env.EMAIL_SERVER_PASSWORD);
   // Create reusable transporter object using SMTP transport
   const transporter = nodemailer.createTransport({
     service: "gmail", // Gmail as the email service provider
