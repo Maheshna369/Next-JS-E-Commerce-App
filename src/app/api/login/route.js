@@ -25,7 +25,7 @@ export const POST = async (request) => {
         const token = jwt.sign(emailExists.Email || Email, secretKey);
         response.cookies.set("MaphyCookie", token || emailExists.Token, {
           httpOnly: true,
-          // secure: process.env.NODE_ENV === "production", // Secure only in production
+          secure: process.env.NODE_ENV === "production", // Secure only in production
           secure: false,
           path: "/" || "lax",
         });

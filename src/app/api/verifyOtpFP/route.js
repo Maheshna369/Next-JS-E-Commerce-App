@@ -20,8 +20,8 @@ export const POST = async (request) => {
   if (otpExists.otp === otp) {
     // OTP is correct
     // You can clear the OTP after successful verification if it's only for one-time use
-
-    const response = await axios.post("http://localhost:3000/api/login", {
+    const apiBaseUrl = process.env.API_BASE_URL || "http://localhost:3000";
+    const response = await axios.post(`${apiBaseUrl}/api/login`, {
       Email: email,
       Password: "",
       otp: otp,
