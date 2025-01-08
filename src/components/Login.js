@@ -126,7 +126,9 @@ const Login = () => {
               <span>
                 Forgot Password,{" "}
                 <span
-                  onClick={() => setOpenForgotPasswordModal(true)}
+                  onClick={() =>
+                    toast.error("This feature is not activated, yet !")
+                  }
                   className="text-blue-500"
                 >
                   Click Here

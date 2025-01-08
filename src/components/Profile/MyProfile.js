@@ -22,7 +22,7 @@ const MyProfile = () => {
       const response = await axios.get("/api/logout");
       const data = response.data.message;
       toast.success(data);
-      window.location.reload();
+      window.location.replace("/");
     } catch (error) {
       console.error(`Error while Logout is ${error}`);
     } finally {

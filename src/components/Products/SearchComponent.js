@@ -7,12 +7,12 @@ import SortIcon from "@mui/icons-material/Sort";
 import { Filter } from "lucide-react";
 import Star from "../Star";
 import { PuffLoader } from "react-spinners";
-import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineStar } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 const SearchComponent = () => {
   const params = useSearchParams();
-  const router= useRouter();
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openSortModal, setOpenSortModal] = useState(false);
@@ -62,17 +62,16 @@ const SearchComponent = () => {
       setLoading(false);
     }
   };
-  const handleClick=(id)=>{
+  const handleClick = (id) => {
     try {
-      setLoading(true)
-      router.push(`/singleProduct/${id}`)
+      setLoading(true);
+      router.push(`/singleProduct/${id}`);
     } catch (error) {
-      console.error(`Error while clicking the product is ${error}`)
+      console.error(`Error while clicking the product is ${error}`);
+    } finally {
+      setLoading(false);
     }
-    finally{
-      setLoading(false)
-    }
-  }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -105,7 +104,7 @@ const SearchComponent = () => {
           <PuffLoader />
         </div>
       )}
-      <ToastContainer />
+      <Toaster />
       <div className="w-screen h-auto">
         <div className="w-screen h-24 xl:h-40 flex justify-center items-center border-b-2">
           <div
@@ -174,7 +173,7 @@ const SearchComponent = () => {
           </div>
           <div className="w-[50%] flex justify-center items-center">
             <Filter
-              onClick={() => toast.info("This feature is not activated, yet !")}
+              onClick={() => toast.error("This feature is not activated, yet !")}
             />{" "}
             Filter
           </div>
@@ -183,17 +182,12 @@ const SearchComponent = () => {
           {products.length > 0 ? (
             products.map((product, index) => (
               <div
-              onClick={()=>handleClick(product.id)}
+                onClick={() => handleClick(product.id)}
                 key={index}
                 className="w-screen xl:w-1/3 flex xl:hidden justify-center items-center gap-3 mx-3 xl:mx-5 border-b-2"
               >
                 <div className="flex justify-center items-center gap-3 xl:gap-5">
-                  <Image
-                    src={product.thumbnail}
-                    height={200}
-                    width={200}
-                    alt="Product Thumbnail"
-                  />
+                  <img src={product.thumbnail} alt="Product Thumbnail" />
                 </div>
                 <div className="flex flex-col justify-center items-center">
                   <span className="text-lg font-bold">{product.title}</span>
@@ -225,7 +219,7 @@ const SearchComponent = () => {
             products.map((product, index) => {
               return (
                 <div
-                onClick={()=>handleClick(product.id)}
+                  onClick={() => handleClick(product.id)}
                   key={index}
                   className="w-screen xl:flex hidden justify-center items-center border-b-2"
                 >
@@ -242,8 +236,13 @@ const SearchComponent = () => {
                       {product.title}
                     </span>
                     <div className="flex justify-center items-center gap-3">
-                      <span className="flex justify-center items-center gap-2 bg-[#388E3C] text-white px-3 py-2 border rounded-xl">{product.rating.toFixed(1)}<AiOutlineStar className="text-white"/></span>
-                      <span className="text-xl">{product.reviews.length} reviews</span>
+                      <span className="flex justify-center items-center gap-2 bg-[#388E3C] text-white px-3 py-2 border rounded-xl">
+                        {product.rating.toFixed(1)}
+                        <AiOutlineStar className="text-white" />
+                      </span>
+                      <span className="text-xl">
+                        {product.reviews.length} reviews
+                      </span>
                     </div>
                   </div>
                   <div className="w-[25%] flex flex-col justify-evenly items-center">
@@ -272,7 +271,9 @@ const SearchComponent = () => {
               );
             })
           ) : (
-            <div className="hidden xl:flex justify-center items-center text-3xl font-bold">No items available</div>
+            <div className="hidden xl:flex justify-center items-center text-3xl font-bold">
+              No items available
+            </div>
           )}
         </div>
       </div>

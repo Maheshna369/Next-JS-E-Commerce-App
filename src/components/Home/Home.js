@@ -35,6 +35,26 @@ const Home = () => {
       setLoading(false);
     }
   };
+  const handleTrendingImageClick = (id) => {
+    try {
+      setLoading(true);
+      router.push(`/singleProduct/${id}`);
+    } catch (error) {
+      console.error(`Error while clicking the product is ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleTrendingItemClick = (id) => {
+    try {
+      setLoading(true);
+      router.push(`/singleProduct/${id}`);
+    } catch (error) {
+      console.error(`Error while clicking the product is ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +86,7 @@ const Home = () => {
         </div>
       )}
       <div
-        className="h-[1460px] w-screen flex flex-col justify-start items-center border-2 border-black relative"
+        className="h-[1460px] w-screen flex flex-col justify-start items-center  relative"
         id="home"
       >
         <div className="w-screen h-[460px] flex flex-col justify-center items-center gap-5">
@@ -77,8 +97,8 @@ const Home = () => {
             <div className="product-carousel mt-4 mx-auto w-full max-w-4xl px-4 md:px-0">
               {/* Main Image Carousel */}
               <Swiper
-                modules={[Navigation, Pagination, Thumbs, Zoom]}
-                navigation
+                modules={[Pagination, Thumbs, Zoom]}
+                // navigation
                 pagination={{ clickable: true }}
                 thumbs={{ swiper: thumbsSwiper }}
                 zoom
@@ -89,7 +109,7 @@ const Home = () => {
                   <SwiperSlide key={index}>
                     <div className="relative w-full h-80 flex justify-center items-center overflow-hidden bg-gray-100">
                       <img
-                        
+                        onClick={() => handleTrendingImageClick(product.id)}
                         src={product.thumbnail}
                         alt={product.title}
                         className="w-full h-full object-contain"
@@ -135,6 +155,7 @@ const Home = () => {
               return (
                 <div
                   key={index}
+                  onClick={() => handleTrendingItemClick(product.id)}
                   className="w-1/3 flex flex-col justify-center items-center"
                 >
                   <Image

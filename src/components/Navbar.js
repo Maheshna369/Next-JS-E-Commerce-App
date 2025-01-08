@@ -264,7 +264,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="h-40 w-screen xl:h-24 xl:w-screen bg-[#232F3E] text-[#ffff] fixed top-0 flex flex-col xl:flex-row justify-evenly items-center gap-4 z-10">
+      <div className="h-40 w-screen xl:h-24 xl:w-screen bg-[#232F3E] text-[#ffff] fixed top-0 flex flex-col xl:flex-row justify-evenly items-center gap-4 z-[100]">
         <div className="w-screen xl:h-24 flex justify-between items-center">
           <div className="flex justify-center items-center gap-1">
             <div

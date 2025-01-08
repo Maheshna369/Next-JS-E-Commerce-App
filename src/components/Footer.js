@@ -98,10 +98,10 @@ const Footer = () => {
                     onClick={(e) => e.stopPropagation()}
                     className="absolute bottom-[100%] w-[200px] h-[150px] flex flex-col justify-evenly items-center bg-white text-black border rounded-xl"
                   >
-                    <span onClick={()=>setOpenMiniProfile(!openMiniProfile)} className="w-full flex justify-center items-center text-xl font-bold">
+                    <Link href={"/myprofile"} onClick={()=>setOpenMiniProfile(!openMiniProfile)} className="w-full flex justify-center items-center text-xl font-bold">
                       My Profile
                       <AccountBoxIcon />
-                    </span>
+                    </Link>
                     <span
                       onClick={handleLogout}
                       className="w-full flex justify-center items-center text-xl font-bold"
