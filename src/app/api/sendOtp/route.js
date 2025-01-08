@@ -37,11 +37,13 @@ export const POST = async (request) => {
       user: process.env.EMAIL_SERVER_USER, // Your email address (e.g., example@gmail.com)
       pass: process.env.EMAIL_SERVER_PASSWORD, // Your Gmail app password
     },
+    logger: true, // Logs SMTP communication
+    debug: true, // Enables debugging output
   });
 
   // Define the email options
   const mailOptions = {
-    from: process.env.EMAIL_USER, // sender address
+    from: process.env.EMAIL_SERVER_USER, // sender address
     to: email, // receiver address
     subject: "Your OTP Code",
     text: `Here is your OTP code: ${otp}`, // Plain text version
@@ -49,7 +51,7 @@ export const POST = async (request) => {
       <h2 style="text-align: center; color: #4CAF50;">Maphy's Inc</h2>
       <p style="font-size: 16px;">Hi there,</p>
       <p style="font-size: 16px;">
-        We received a request to log in to your account or verify your email address. 
+        We received a request to register. 
         Please use the OTP below to proceed:
       </p>
       <div style="text-align: center; margin: 20px 0;">

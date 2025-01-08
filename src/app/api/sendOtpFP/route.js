@@ -41,7 +41,7 @@ export const POST = async (request) => {
 
   // Define the email options
   const mailOptions = {
-    from: process.env.EMAIL_USER, // sender address
+    from: process.env.EMAIL_SERVER_USER, // sender address
     to: email, // receiver address
     subject: "Your OTP Code",
     text: `Here is your OTP code: ${otp}`, // Plain text version
