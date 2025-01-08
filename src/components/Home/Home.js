@@ -134,7 +134,7 @@ const Home = () => {
               >
                 <Image
                   className="border rounded-2xl"
-                  src={`/cosmetics-tablet-glasses.jpg`}
+                  src={`/categories/${category.slug}.jpg`}
                   height={"300"}
                   width={"300"}
                   alt=""

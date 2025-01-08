@@ -63,13 +63,35 @@ const Footer = () => {
         </span>
         <div className="w-full h-[50%] bg-[#232F3E] text-white flex justify-evenly items-center">
           <ul className="w-[50%] h-full flex flex-col justify-evenly items-center">
-            <Link href={"#"}>
-              <li>Your Account</li>
-            </Link>
-            <Link href={"#"}>
-              <li>Your Orders</li>
-            </Link>
-            <Link href={"#"}>
+            {payload ? (
+              <Link href={"/myprofile"}>
+                <li>Your Account</li>
+              </Link>
+            ) : (
+              <li
+                onClick={() => {
+                  toast.error("First, Sign In Yourself !");
+                  setOpenRegisterModal(true);
+                }}
+              >
+                Your Account
+              </li>
+            )}
+            {payload ? (
+              <Link href={"/myprofile/myorders"}>
+                <li>Your Orders</li>
+              </Link>
+            ) : (
+              <li
+                onClick={() => {
+                  toast.error("First, Sign In Yourself !");
+                  setOpenRegisterModal(true);
+                }}
+              >
+                Your Orders
+              </li>
+            )}
+            <Link href={"/mycart"}>
               <li>Your Cart</li>
             </Link>
           </ul>
@@ -98,7 +120,11 @@ const Footer = () => {
                     onClick={(e) => e.stopPropagation()}
                     className="absolute bottom-[100%] w-[200px] h-[150px] flex flex-col justify-evenly items-center bg-white text-black border rounded-xl"
                   >
-                    <Link href={"/myprofile"} onClick={()=>setOpenMiniProfile(!openMiniProfile)} className="w-full flex justify-center items-center text-xl font-bold">
+                    <Link
+                      href={"/myprofile"}
+                      onClick={() => setOpenMiniProfile(!openMiniProfile)}
+                      className="w-full flex justify-center items-center text-xl font-bold"
+                    >
                       My Profile
                       <AccountBoxIcon />
                     </Link>

@@ -95,6 +95,9 @@ const Navbar = () => {
   const handleSearch = (e) => {
     try {
       e.preventDefault();
+      if (search.trim() === "") {
+        return toast.error("Enter a product name to search !");
+      }
       setLoading(true);
       router.push(`/products/search?q=${search}`);
     } catch (error) {

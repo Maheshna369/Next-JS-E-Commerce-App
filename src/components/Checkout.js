@@ -88,14 +88,6 @@ const Checkout = () => {
     (district) => district.state_name_english === addressDetails.State
   );
   const handlePayment = async () => {
-    // console.log("Name:", addressDetails.Name);
-    // console.log("Street Address:", addressDetails.streetAddress);
-    // console.log("City:", addressDetails.City);
-    // console.log("State:", addressDetails.State);
-    // console.log("District:", addressDetails.District);
-    // console.log("Pincode:", addressDetails.Pincode);
-    // console.log("Email:", contactInfo.Email);
-    // console.log("Phone Number:", contactInfo.phoneNumber);
     if (
       addressDetails.Name.trim() === "" ||
       addressDetails.streetAddress.trim() === "" ||
@@ -108,17 +100,17 @@ const Checkout = () => {
     ) {
       return toast.error("Fill all the fields !");
     }
+  
     try {
-      // Fetch the order_id and other payment data from your backend
       setLoading(true);
       const totalPrice = Number(prices.subTotal) + Number(prices.fees);
       const res = await axios.post("/api/payment", {
         amount: totalPrice * 100,
       });
       const { order_id, key, amount } = res.data;
-
+  
       const options = {
-        key, // Razorpay API key from backend
+        key, // Razorpay API key
         amount, // Amount in paise
         currency: "INR",
         name: "Maphy's E-Commerce",
@@ -126,36 +118,33 @@ const Checkout = () => {
         order_id, // Generated order ID from backend
         handler: async (response) => {
           console.log("Payment Successful", response);
-          if (prices.orderType === "cart") {
-            localStorage.setItem("MaphyCart", []);
-          }
-          setOrderDetails((prev) => {
-            return {
-              ...prev,
-              Name: `${addressDetails.Name}`,
+  
+          // Update orderDetails and save the order
+          setOrderDetails((prev) => ({
+            ...prev,
+            Name: addressDetails.Name,
+            Address: `${addressDetails.streetAddress}, ${addressDetails.City}, ${addressDetails.District}- ${addressDetails.Pincode}, ${addressDetails.State}`,
+            Email: contactInfo.Email,
+            PhoneNumber: contactInfo.phoneNumber,
+          }));
+  
+          try {
+            const orderResponse = await axios.post("/api/order", {
+              PhoneNumber: contactInfo.phoneNumber,
+              OrderedProducts: productDetails || orderDetails.Products,
               Address: `${addressDetails.streetAddress}, ${addressDetails.City}, ${addressDetails.District}- ${addressDetails.Pincode}, ${addressDetails.State}`,
-              Email: `${contactInfo.Email}`,
-              PhoneNumber: `${contactInfo.phoneNumber}`,
-              // SubTotal: `${prices.subTotal}`,
-              // Fees: `${prices.fees}`,
-              // Products: `${productDetails}`,
-            };
-          });
-          const orderResponse = await axios.post("/api/order", {
-            PhoneNumber: orderDetails.PhoneNumber,
-            OrderedProducts: productDetails || orderDetails.Products,
-            Address: orderDetails.Address,
-          });
-          const data = orderResponse.data.message;
-          toast.success(data);
-
-          toast.success(
-            "Order placed successfully! 🎉 Your payment is confirmed. Thank you for shopping with us!"
-          );
-          window.history.pushState(null, null, "/");
-          // Use window.location.replace to redirect without leaving a trace
-          window.location.replace("/");
-          // Handle success logic, e.g., calling another API to confirm the payment
+            });
+            const data = orderResponse.data.message;
+            toast.success(data);
+  
+            toast.success(
+              "Order placed successfully! 🎉 Your payment is confirmed. Thank you for shopping with us!"
+            );
+            window.location.replace("/");
+          } catch (err) {
+            console.error("Order placement error:", err);
+            toast.error("Error saving your order. Please try again.");
+          }
         },
         prefill: {
           name: "Mahesh Kumar Nayak",
@@ -165,17 +154,31 @@ const Checkout = () => {
         theme: {
           color: "#3399cc",
         },
+        modal: {
+          ondismiss: () => {
+            console.log("Payment popup closed.");
+            toast.info("Payment was not completed. Please try again.");
+          },
+        },
+        // Failure handler
+        callback_url: "/api/payment/failure",
+        onFailure: (response) => {
+          console.error("Payment Failed:", response);
+          toast.error("Payment failed! Please try again.");
+        },
       };
-
-      // Initialize Razorpay and open the dialog
+  
       const razorpay = new Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("Payment Error:", error);
+      console.error("Payment Initialization Error:", error);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+  
+  
   return (
     <>
       <Script

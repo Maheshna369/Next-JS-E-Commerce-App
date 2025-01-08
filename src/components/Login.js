@@ -41,7 +41,9 @@ const Login = () => {
         return;
       }
       toast.success(data);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error(`Error while login is ${error}`);
     } finally {

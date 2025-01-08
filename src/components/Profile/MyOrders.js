@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { GridLoader } from "react-spinners";
+import Link from "next/link";
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,38 +39,48 @@ const MyOrders = () => {
           All Orders
         </span>
         <div className="w-full flex flex-col justify-center items-center gap-3 xl:gap-5">
-          {orders.map((order, index) => {
-            return (
-              <div
-                className="w-full flex justify-center items-center gap-3 border rounded-xl px-3 py-2"
-                key={index}
-              >
-                <div className="w-[25%] flex flex-col justify-center items-center">
-                  <img src={order.productDetails.thumbnail} alt="" />
-                  <span className="w-full flex justify-center items-center text-xl font-bold">
-                    {order.productDetails.title}×{order.orderedQuantity}
-                  </span>
-                  <span className="w-full flex justify-center items-center text-lg font-medium">
-                    ₹
-                    {formatPrice(
-                      order.productDetails.price * 85 +
-                        100 +
-                        (order.productDetails.price * 85 <= 500 ? 29 : 0)
-                    )}
-                  </span>
+          {orders.length > 0 ? (
+            orders.map((order, index) => {
+              return (
+                <div
+                  className="w-full flex justify-center items-center gap-3 border rounded-xl px-3 py-2"
+                  key={index}
+                >
+                  <div className="w-[25%] flex flex-col justify-center items-center">
+                    <img src={order.productDetails.thumbnail} alt="" />
+                    <span className="w-full flex justify-center items-center text-xl font-bold">
+                      {order.productDetails.title}×{order.orderedQuantity}
+                    </span>
+                    <span className="w-full flex justify-center items-center text-lg font-medium">
+                      ₹
+                      {formatPrice(
+                        order.productDetails.price * 85 +
+                          100 +
+                          (order.productDetails.price * 85 <= 500 ? 29 : 0)
+                      )}
+                    </span>
+                  </div>
+                  <div className="w-[75%] flex flex-col justify-center items-center gap-3">
+                    <span className="w-full flex justify-start items-center text-xl font-normal">
+                      Delivery Address:
+                      {order.address}
+                    </span>
+                    <span className="w-full flex justify-start items-center text-xl font-normal">
+                      Phone Number: {order.phoneNumber}
+                    </span>
+                  </div>
                 </div>
-                <div className="w-[75%] flex flex-col justify-center items-center gap-3">
-                  <span className="w-full flex justify-start items-center text-xl font-normal">
-                    Delivery Address:
-                    {order.address}
-                  </span>
-                  <span className="w-full flex justify-start items-center text-xl font-normal">
-                    Phone Number: {order.phoneNumber}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="text-2xl font-extrabold">
+              No Orders are placed,{" "}
+              <Link href={"/"} className="text-blue-500">
+                Click Here
+              </Link>{" "}
+              to Shop !
+            </div>
+          )}
         </div>
       </div>
     </>

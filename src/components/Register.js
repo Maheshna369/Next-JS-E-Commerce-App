@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
@@ -137,6 +137,7 @@ const Register = () => {
             <h1 className="w-full flex justify-center items-center text-2xl font-extrabold text-[#0d6efd]">
               Sign Up
             </h1>
+
             <label className="w-full flex flex-col justify-center items-start px-5">
               <span className="text-lg font-medium">Name</span>
               <input
